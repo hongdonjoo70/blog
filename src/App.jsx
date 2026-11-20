@@ -48,7 +48,8 @@ function App() {
         <button onClick={() => {setModal(!modal)}}>열고닫기</button>
         {
           modal == true ? <Modal/> : null
-        }        
+        }  
+      
       </div>
     </>
   )
