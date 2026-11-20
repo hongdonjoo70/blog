@@ -11,7 +11,8 @@ function App() {
   const [title, setTitle] = useState(['경기도', '서울시', '인천시']);
   const [click, setClick] = useState([0,0,0]);
   const [modal, setModal] = useState(false);
-
+  const [titlenum, setTitlenum] = useState(0);
+  const [input, setInput] = useState('');
 
   return (
     <>
@@ -31,6 +32,8 @@ function App() {
                   let copy = [...click];
                   copy[index] += 1;
                   setClick(copy);
+                  setModal(true);
+                  setTitlenum(index);
                 }}>👍</span> {click[index]}</h4>   
 
                 <p>2월 17일 발행</p>
@@ -39,17 +42,36 @@ function App() {
                   let copy = [...title];
                   copy[index] = '부산시';
                   setTitle(copy);
-                }}>제목변경</button>                
+                }}>제목변경</button> 
+
+                <button onClick={() => {
+                  let copy = [...title];
+                  copy.splice(index, 1);
+                  setTitle(copy);
+                  let copy2 = [...click];
+                  copy2.splice(index, 1);
+                  setClick(copy2);
+                }}>삭제</button> 
                </div>
             )
            })
           }
-        </div> 
-        <button onClick={() => {setModal(!modal)}}>열고닫기</button>
+        </div>         
+        <input type="text" value={input} onChange={(e) => {
+          setInput(e.target.value);
+        }} />
+        <button onClick={() => {
+          let copy = [...title];
+          let copy2 = [...click];
+          copy2.unshift(0);
+          setClick(copy2);    
+          copy.unshift(input);          
+          setTitle(copy);
+          setInput('');
+        }}>추가</button>
         {
-          modal == true ? <Modal/> : null
+          modal == true ? <Modal title={title} setModal={setModal}titlenum={titlenum} color="red" /> : null
         }  
-      
       </div>
     </>
   )
